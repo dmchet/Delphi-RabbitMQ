@@ -1947,12 +1947,17 @@ type
     *
     * \since v0.1
   *)
+{$IFDEF Win64}
+  {$Z+}
+{$ENDIF}
   amqp_sasl_method_enum_ = (AMQP_SASL_METHOD_UNDEFINED = -1, (* Invalid SASL method *)
     AMQP_SASL_METHOD_PLAIN = 0, (* the PLAIN SASL method for authentication to the broker *)
     AMQP_SASL_METHOD_EXTERNAL = 1 (* the EXTERNAL SASL method for authentication to the broker *)
     );
   amqp_sasl_method_enum = amqp_sasl_method_enum_;
-
+{$IFDEF Win64}
+  {$Z-}
+{$ENDIF}
   (* *
     * connection state object
     *
@@ -2987,7 +2992,8 @@ function amqp_get_rpc_reply(state: amqp_connection_state_t): amqp_rpc_reply_t; c
   * \since v0.1
 *)
 
-function amqp_login(state: amqp_connection_state_t; const vhost: PAnsiChar; channel_max: integer; frame_max: integer; heartbeat: integer; sasl_method: amqp_sasl_method_enum): amqp_rpc_reply_t;
+function amqp_login(state: amqp_connection_state_t; const vhost: PAnsiChar; channel_max: integer;
+  frame_max: integer; heartbeat: integer; sasl_method: amqp_sasl_method_enum): amqp_rpc_reply_t;
   varargs; cdecl;
 
 (* *
